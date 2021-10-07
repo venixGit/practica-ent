@@ -39,12 +39,27 @@ class EstudianteController extends Controller
      */
     public function store(Request $request)
     {
-        $datosEstudiante = $request->except('_token');
+        //validar campos
+        $campos = [
+            'nombre'    => 'required|string|max:100',
+            'telefono'  => 'required|int|min:8',
+            'correo'    => 'required|email'
+        ];
 
+        //mensajes de error
+        $mensaje=[
+            'required'      =>'El :attribute es requerido',
+        ];
+
+        //enviamos los mensajes
+        $this->validate($request, $campos, $mensaje);
+
+        //validamos que no se envie el token a la bd
+        $datosEstudiante = $request->except('_token');
         Estudiante::insert($datosEstudiante);
 
         // return response()->json($datosEstudiante);
-        return redirect('estudiante');
+        return redirect('estudiante')->with('mensaje','Estudiante registrado correctamente');
     }
 
     /**
@@ -79,7 +94,21 @@ class EstudianteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
+    {   //validar campos
+        $campos = [
+            'nombre'    => 'required|string|max:100',
+            'telefono'  => 'required|int|min:8',
+            'correo'    => 'required|email'
+        ];
+
+        //mensajes de error
+        $mensaje=[
+            'required'      =>'El :attribute es requerido',
+        ];
+
+        //enviamos los mensajes
+        $this->validate($request, $campos, $mensaje);
+
         try {
             //no mando el toquen y method a la bd
             $datosEstudiante = $request->except('_token','_method');
@@ -90,7 +119,7 @@ class EstudianteController extends Controller
             //reconfirmar que es el id del Estudiante
             $Estudiante = Estudiante::findOrFail($id);
 
-            return redirect('estudiante');
+            return redirect('estudiante')->with('mensaje','Estudiante actualizado correctamente');
             
         } catch (\Throwable $th) {
             return view('estudiante.edit');
@@ -111,6 +140,6 @@ class EstudianteController extends Controller
         $deleteEstudiante->save();
 
 
-        return redirect('estudiante');
+        return redirect('estudiante')->with('mensaje','Estudiante eliminado correctamente');
     }
 }
