@@ -16,9 +16,10 @@
             {{ Form::text('horario', $curso->horario, ['class' => 'form-control' . ($errors->has('horario') ? ' is-invalid' : ''), 'placeholder' => 'Horario']) }}
             {!! $errors->first('horario', '<div class="invalid-feedback">:message</p>') !!}
         </div>
+        
         <div class="form-group">
             {{ Form::label('profersor_id') }}
-            {{ Form::text('profersor_id', $curso->profersor_id, ['class' => 'form-control' . ($errors->has('profersor_id') ? ' is-invalid' : ''), 'placeholder' => 'Profersor Id']) }}
+            {{ Form::select('profersor_id', $profesores ,$curso->profersor_id, ['class' => 'form-control' . ($errors->has('profersor_id') ? ' is-invalid' : ''), 'placeholder' => 'Profersor Id']) }}
             {!! $errors->first('profersor_id', '<div class="invalid-feedback">:message</p>') !!}
         </div>
         <div class="form-group">
