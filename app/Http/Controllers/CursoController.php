@@ -75,8 +75,8 @@ class CursoController extends Controller
     public function edit($id)
     {
         $curso = Curso::find($id);
-
-        return view('curso.edit', compact('curso'));
+        $profesores=Profesor::pluck('nombre', 'id');
+        return view('curso.edit', compact('curso','profesores'));
     }
 
     /**
