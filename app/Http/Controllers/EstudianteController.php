@@ -66,9 +66,9 @@ class EstudianteController extends Controller
      */
     public function edit($id)
     {   //busco al estudiante
-        $estudiante = Empleado::findOrFail($id);
+        $estudiante = Estudiante::findOrFail($id);
         //
-        return view('empleado.edit', compact('empleado'));
+        return view('estudiante.edit', compact('estudiante'));
     }
 
     /**
@@ -78,9 +78,23 @@ class EstudianteController extends Controller
      * @param  \App\Models\Estudiante  $estudiante
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Estudiante $estudiante)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            //no mando el toquen y method a la bd
+            $datosEstudiante = $request->except('_token','_method');
+
+            //busco el estudiante y lo actualizo
+            Estudiante::where('id','=', $id)
+                        ->update($datosEstudiante);
+            //reconfirmar que es el id del Estudiante
+            $Estudiante = Estudiante::findOrFail($id);
+
+            return redirect('estudiante');
+            
+        } catch (\Throwable $th) {
+            return view('estudiante.edit');
+        }
     }
 
     /**
