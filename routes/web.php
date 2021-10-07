@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EstudianteController;
+use App\Http\Controllers\ProfesorController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,6 +19,8 @@ Route::get('/', function () {
 });
 
 Route::resource('estudiante', EstudianteController::class);
+Route::resource('profesor', ProfesorController::class);
+
 Auth::routes();
 
 Route::get('/home', [EstudianteController::class, 'index'])->name('home');

@@ -14,7 +14,10 @@ class ProfesorController extends Controller
      */
     public function index()
     {
-        //
+        //mostrar profesores
+        $datos['profesores']=Profesor::where('estado', "=", 1)
+                                    ->paginate(5);
+        return view('profesor.index', $datos);
     }
 
     /**
@@ -25,6 +28,7 @@ class ProfesorController extends Controller
     public function create()
     {
         //
+        return view('profesor.create');
     }
 
     /**
@@ -36,6 +40,27 @@ class ProfesorController extends Controller
     public function store(Request $request)
     {
         //
+        //validar campos
+        $campos = [
+            'nombre'    => 'required|string|max:100',
+            'telefono'  => 'required|int|min:8',
+            'correo'    => 'required|email'
+        ];
+
+        //mensajes de error
+        $mensaje=[
+            'required'      =>'El :attribute es requerido',
+        ];
+
+        //enviamos los mensajes
+        $this->validate($request, $campos, $mensaje);
+
+        //validamos que no se envie el token a la bd
+        $datosProfesor = $request->except('_token');
+        Profesor::insert($datosProfesor);
+
+        // return response()->json($datosProfesor);
+        return redirect('profesor')->with('mensaje','Profesor registrado correctamente');
     }
 
     /**
@@ -55,10 +80,14 @@ class ProfesorController extends Controller
      * @param  \App\Models\Profesor  $profesor
      * @return \Illuminate\Http\Response
      */
-    public function edit(Profesor $profesor)
+    public function edit($id)
     {
         //
+        $profesor = Profesor::findOrFail($id);
+        //retorno la vista con los datos del profesor
+        return view('profesor.edit', compact('profesor'));
     }
+    
 
     /**
      * Update the specified resource in storage.
@@ -67,9 +96,38 @@ class ProfesorController extends Controller
      * @param  \App\Models\Profesor  $profesor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Profesor $profesor)
+    public function update(Request $request, $id)
     {
-        //
+        //validar campos
+        $campos = [
+            'nombre'    => 'required|string|max:100',
+            'telefono'  => 'required|int|min:8',
+            'correo'    => 'required|email'
+        ];
+
+        //mensajes de error
+        $mensaje=[
+            'required'      =>'El :attribute es requerido',
+        ];
+
+        //enviamos los mensajes
+        $this->validate($request, $campos, $mensaje);
+
+        try {
+            //no mando el toquen y method a la bd
+            $datosProfesor = $request->except('_token','_method');
+
+            //busco el Profesor y lo actualizo
+            Profesor::where('id','=', $id)
+                        ->update($datosProfesor);
+            //reconfirmar que es el id del Profesor
+            $profesor = Profesor::findOrFail($id);
+
+            return redirect('profesor')->with('mensaje','Profesor actualizado correctamente');
+            
+        } catch (\Throwable $th) {
+            return view('profesor.edit');
+        }
     }
 
     /**
@@ -78,8 +136,13 @@ class ProfesorController extends Controller
      * @param  \App\Models\Profesor  $profesor
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Profesor $profesor)
+    public function destroy($id)
     {
-        //
+        $deleteProfesor = Profesor::find($id);
+        $deleteProfesor->estado = 0;
+        $deleteProfesor->save();
+
+
+        return redirect('profesor')->with('mensaje','Profesor eliminado correctamente');
     }
 }

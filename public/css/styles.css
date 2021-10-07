@@ -1,0 +1,24 @@
+.navigation {
+    position: relative;
+    display: flex;
+    margin-top: 17px;
+}
+
+.navigation li {
+    list-style: none;
+    margin-left: 30px;
+}
+
+.navigation li a {
+    text-decoration: none;
+    font-weight: 500;
+    letter-spacing: 1px;
+    /* font-family: var(--poppins-font); */
+}
+
+.navigation li a:hover {
+    /* font-family: var(--poppins-font); */
+    color: blue;
+    /* color: #ff0157; */
+    letter-spacing: 2px;
+}
