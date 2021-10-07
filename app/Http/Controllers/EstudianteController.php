@@ -15,6 +15,9 @@ class EstudianteController extends Controller
     public function index()
     {
         //
+        $datos['estudiantes']=Estudiante::where('estado', "=", 1)
+                                    ->paginate(5);
+        return view('estudiante.index', $datos);
     }
 
     /**
@@ -25,6 +28,7 @@ class EstudianteController extends Controller
     public function create()
     {
         //
+        return view('estudiante.create');
     }
 
     /**
@@ -35,7 +39,12 @@ class EstudianteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $datosEstudiante = $request->except('_token');
+
+        Estudiante::insert($datosEstudiante);
+
+        // return response()->json($datosEstudiante);
+        return redirect('estudiante');
     }
 
     /**
@@ -55,9 +64,11 @@ class EstudianteController extends Controller
      * @param  \App\Models\Estudiante  $estudiante
      * @return \Illuminate\Http\Response
      */
-    public function edit(Estudiante $estudiante)
-    {
+    public function edit($id)
+    {   //busco al estudiante
+        $estudiante = Empleado::findOrFail($id);
         //
+        return view('empleado.edit', compact('empleado'));
     }
 
     /**
