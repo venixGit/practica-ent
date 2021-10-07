@@ -13,8 +13,15 @@ use App\Http\Controllers\EstudianteController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('estudiante.index');
-// });
+Route::get('/', function () {
+    return view('auth.login');
+});
 
 Route::resource('estudiante', EstudianteController::class);
+Auth::routes();
+
+Route::get('/home', [EstudianteController::class, 'index'])->name('home');
+
+Route::group(['middlware' => 'auth'],function (){
+    Route::get('/home', [EstudianteController::class, 'index'])->name('home');
+});

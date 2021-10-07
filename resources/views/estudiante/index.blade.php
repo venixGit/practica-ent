@@ -1,13 +1,6 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    <!-- fontawesome -->
-    <link
-        rel="stylesheet"
-        href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
-        integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk"
-        crossorigin="anonymous"
-    />
+@extends('layouts.app')
 
-
+@section('content')
 
 <!-- mensajes de sesion -->
 @if(Session::has('mensaje'))
@@ -83,3 +76,4 @@
 
     </section>
 </div>
+@endsection
