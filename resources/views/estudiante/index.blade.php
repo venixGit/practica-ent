@@ -50,6 +50,7 @@
                                                         </a>
                                                         <form action="{{url('/estudiante/'.$estudiante->id)}}" method="POST">
                                                             @csrf
+                                                            <!-- metodo para eliminar -->
                                                             {{method_field('DELETE')}}
                                                             <button type="submit"
                                                                     class="btn btn-danger mt-auto"

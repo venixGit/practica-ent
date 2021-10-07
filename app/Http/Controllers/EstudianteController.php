@@ -103,8 +103,14 @@ class EstudianteController extends Controller
      * @param  \App\Models\Estudiante  $estudiante
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Estudiante $estudiante)
+    public function destroy($id)
     {
-        //
+        
+        $deleteEstudiante = Estudiante::find($id);
+        $deleteEstudiante->estado = 0;
+        $deleteEstudiante->save();
+
+
+        return redirect('estudiante');
     }
 }
