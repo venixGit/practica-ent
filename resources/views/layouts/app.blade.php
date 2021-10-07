@@ -33,7 +33,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-success shadow-sm">
             <div class="container">
-                <a class="navbar-brand text-white" href="{{ url('/') }}">
+                <a class="navbar-brand text-white" href="{{ url('estudiante') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -43,6 +43,7 @@
                 <ul class="navigation">
                     <li><a class="estudiantes text-white" href="{{url('estudiante')}}">Estudiantes</a></li>
                     <li><a class="profesores text-white" href="{{url('profesor')}}">Profesores</a></li>
+                    <li><a class="cursos text-white" href="{{route('cursos.index')}}">Cursos</a></li>
                 </ul>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
